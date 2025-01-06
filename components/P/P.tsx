@@ -1,4 +1,4 @@
-import { DetailedHTMLProps, HTMLAttributes, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import styles from './P.module.css'
 
 interface PProps {
