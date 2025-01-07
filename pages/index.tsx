@@ -44,7 +44,7 @@ export default function Home() {
       <Tag size='small' color='grey'>Тег серого</Tag>
 
       <div>
-        <h1>Оцените наш сервис</h1>
+        <h3>Оцените наш сервис</h3>
         <Rating
           name="half-rating"
           value={rating}
