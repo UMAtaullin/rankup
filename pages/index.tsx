@@ -1,23 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Htag, P, Tag } from '../components';
+import { Button, Htag, P, Tag} from '../components';
+import { Rating } from '@mui/material';
+
 
 export default function Home() {
-  let [count, setCount] = useState<number>(0)
+
+  // Состояние для хранения рейтинга
+  const [rating, setRating] = useState<number | null>(null);
+
+  // Эффект для загрузки рейтинга из localStorage при первом рендере
   useEffect(() => {
-    console.log('Counter' + count)
-    return () => console.log('Counter unmounted')
-  }, [])
+    const savedRating = localStorage.getItem('userRating');
+    if (savedRating) {
+      setRating(Number(savedRating)); // Преобразуем строку в число
+    }
+  }, []);
+
+  // Функция для обработки изменения рейтинга
+  const handleRatingChange = (newValue: number | null) => {
+    setRating(newValue); // Обновляем состояние рейтинга
+    localStorage.setItem('userRating', String(newValue)); // Сохраняем новый рейтинг в localStorage
+  };
+
   return (
     <>
-      <Htag tag='h1'>{count}</Htag>
+      <Htag tag='h1'>Заголовок</Htag>
 
       <Button 
-        onClick={() => setCount(count = count + 1)}
         appearance='primary' 
         arrow='right'
         >Кнопка</Button>
       <Button 
-        onClick={() => setCount(count = count - 1)}
         appearance='ghost' 
         arrow='down'
         >Кнопка</Button>
@@ -29,6 +42,18 @@ export default function Home() {
       <Tag size='big' color='red'>Тег красного</Tag>
       <Tag size='small' color='green'>Тег зеленого</Tag>
       <Tag size='small' color='grey'>Тег серого</Tag>
+
+      <div>
+        <h1>Оцените наш сервис</h1>
+        <Rating
+          name="half-rating"
+          value={rating}
+          precision={0.5}
+          onChange={(event, newValue) => {
+            handleRatingChange(newValue); // Обрабатываем изменение рейтинга
+          }}
+        />
+      </div>
     </>
   );
 }
